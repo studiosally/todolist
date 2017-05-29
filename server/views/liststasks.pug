@@ -1,0 +1,41 @@
+extends layout
+
+block content
+
+    .container
+      .row
+        .col-md-6
+          .todolist.not-done
+            h1 TO DO LIST
+            form(action='/tasks', method='POST')
+              input.form-control.add-task(name="title", type='text', placeholder='Add task')
+              button#checkAll.btn.btn-primary Add task
+            
+            hr
+            ul#sortable.list-unstyled
+              each task in tasks
+                li.ui-state-default
+                  .checkbox
+                    label
+                      input(type='checkbox', value='')
+                      p.checkboxdone(href="/task/" + task._id) #{task.title} 
+                        form.edit-form(action=`/task/${task._id}`)
+                          input.input-lg.hidden(name='edited-name', value=task.title)
+                      p created at: #{task.createdat}
+                      input(type="hidden", name="title", value=task.title)
+                      input(type="hidden", name="url", value="/task/" + task._id)
+                      a.remove(href="/task/" + task._id) remove
+              .todo-footer
+                strong
+                  span.count-todos
+                |  Items Left
+        //- .col-md-6
+        //-   .todolist
+        //-     h1 Already Done
+        //-     ul#done-items.list-unstyled
+        //-       li
+        //-         | Some item 
+        //-         button.remove-item.btn.btn-default.btn-xs.pull-right
+        //-           span.glyphicon.glyphicon-remove
+
+
